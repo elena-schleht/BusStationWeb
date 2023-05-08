@@ -29,6 +29,12 @@ namespace BusStationWeb.Pages
         {
             var trip = Trips.Find(x => x.TripId == tripId);
 
+            if (trip.AvailableSeats == 0)
+            {
+                Error = $"Извините свободных мест на данный рейс уже нет";
+                return Page();
+            }
+
             var exist = dbContext.Tickets.FirstOrDefault(x => x.Trip.TripId == trip.TripId
                 && x.Trip.DepartureDate == trip.DepartureDate 
                 && x.FIO == fio);
