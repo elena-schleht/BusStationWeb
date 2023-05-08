@@ -3,8 +3,63 @@
 @{
     ViewData["Title"] = "Автовокзал Тирасполь";
 }
+@*<h1>@ViewData["Title"]</h1>*@
 
-<div class="text-center">
+<div id="Index" class="text-center wrp pb-3">
     <h1 class="display-4">Автовокзал Тирасполь</h1>
     <p>Тут вы можете выбрать интересующий вас маршрут и забронировать билет.</p>
+</div>
+
+<div class="text-center wrp">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>Дата отправления</th>
+            <th>Откуда</th>
+            <th>Куда</th>
+            <th>Цена</th>
+            <th>Количество мест</th>
+            <th></th>
+        </tr>
+        @foreach (var trip in Model.Trips)
+        {
+            <tr>
+                <td>@trip.DepartureDate.ToString("dd.MM.yyyy hh:mm")</td>
+                <td>@trip.Route.From</td>
+                <td>@trip.Route.To</td>
+                <td>@trip.Route.Price</td>
+                <td>@trip.AvailableSeats</td>
+                <td><button onclick="selectTrip(@trip.TripId, '@trip.Route.From', '@trip.Route.To')" id="SelectedTrip" class="btn btn-default">Забронировать</button></td>
+            </tr>
+        }
+    </table>
+
+    <div id="idTicket" style="display: none">
+        
+        <form class="form" method="post">
+            <div class="mb-3">
+                <span id="selectedTrip"></span>
+            </div>
+
+            <div class="mb-3">
+                <input id="selectedTripId" hidden name="tripId" />
+                <label for="idFio" class="form-label">ФИО</label>
+                <input type="text" name="FIO" class="form-control" id="idFio">
+            </div>
+            <button id="postTicket" asp-page-handler="Ticket" type="submit" asp-for="FIO" asp-for="tripId" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>    
+
+    @if(Model.IsBooked)
+    {
+        <div class="alert alert-success" role="alert">
+            @Html.Raw(@Model.Info.Replace("\r\n", "<br />"))
+        </div>
+    }
+
+    @if (Model.Error != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @Html.Raw(@Model.Error.Replace("\r\n", "<br />"))
+        </div>
+    }
 </div>
