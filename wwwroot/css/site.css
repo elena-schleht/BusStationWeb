@@ -16,3 +16,7 @@ html {
 body {
     margin-bottom: 60px;
 }
+
+.Contacts address,div {
+    font-size: 18px;
+}
