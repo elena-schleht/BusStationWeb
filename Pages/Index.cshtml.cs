@@ -3,7 +3,6 @@ using BusStationWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace BusStationWeb.Pages
 {
@@ -36,7 +35,7 @@ namespace BusStationWeb.Pages
             }
 
             var exist = dbContext.Tickets.FirstOrDefault(x => x.Trip.TripId == trip.TripId
-                && x.Trip.DepartureDate == trip.DepartureDate 
+                && x.Trip.DepartureDate == trip.DepartureDate
                 && x.FIO == fio);
 
             if (exist != null)
@@ -44,9 +43,9 @@ namespace BusStationWeb.Pages
                 Error = $"Вы уже забронировали билет с номером <strong>{exist.TicketId}</strong>";
                 return Page();
             }
-            
-            var newTicket = dbContext.Tickets.Add(new Ticket 
-            { 
+
+            var newTicket = dbContext.Tickets.Add(new Ticket
+            {
                 TripId = trip.TripId,
                 Price = trip.Route.Price,
                 PurchaseDate = DateTime.Now,

@@ -1,0 +1,38 @@
+﻿@page
+@model BusStationWeb.Pages.Admin.DeleteModel
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h3>Вы уверены, что хотите удалить это?</h3>
+<div>
+    <h4>Маршрут(Route)</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Route.From)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Route.From)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Route.To)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Route.To)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Route.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Route.Price)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Route.RouteId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./AdminIndex">Вернуться</a>
+    </form>
+</div>

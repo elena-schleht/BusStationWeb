@@ -1,0 +1,35 @@
+﻿@page
+@model BusStationWeb.Pages.Admin.DetailsModel
+
+@{
+    ViewData["Title"] = "Детали";
+}
+
+<div>
+    <h4>Route</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Route.From)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Route.From)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Route.To)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Route.To)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Route.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Route.Price)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Route?.RouteId">Редактировать</a> |
+    <a asp-page="./AdminIndex">Вернуться</a>
+</div>

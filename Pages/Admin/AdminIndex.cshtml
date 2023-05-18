@@ -1,0 +1,130 @@
+﻿@page
+@model Admin.AdminIndex
+
+@{
+    ViewData["Title"] = "Админка";
+}
+
+<h4 class="text-center">Маршруты</h4>
+
+<p>
+    <a asp-page="Create" asp-route-type="route">Создать маршрут</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Откуда
+            </th>
+            <th>
+                Куда
+            </th>
+            <th>
+                Цена
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Routes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.From)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.To)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.RouteId" asp-route-type="route">Редактировать</a> |
+                    <a asp-page="./Details" asp-route-id="@item.RouteId" asp-route-type="route">Детали</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.RouteId" asp-route-type="route">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h4 class="text-center">Рейсы</h4>
+
+<p>
+    <a asp-page="Create" asp-route-type="trip">Создать рейс</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Дата отправления
+            </th>
+            <th>
+                Количество мест
+            </th>
+            <th>
+                Маршрут
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Trips)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartureDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailableSeats)
+                </td>
+                <td>
+                    @item.Route.From - @item.Route.To
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.TripId" asp-route-type="trip">Редактировать</a> |
+                    <a asp-page="./Details" asp-route-id="@item.TripId" asp-route-type="trip">Детали</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.TripId" asp-route-type="trip">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Откуда
+            </th>
+            <th>
+                Куда
+            </th>
+            <th>
+                Цена
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tickets)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.To)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.RouteId">Редактировать</a> |
+                    <a asp-page="./Details" asp-route-id="@item.RouteId">Детали</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.RouteId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>*@
