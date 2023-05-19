@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BusStationWeb.Pages.Admin
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly BusStationWeb.Data.ApplicationDbContext _context;
@@ -12,6 +15,8 @@ namespace BusStationWeb.Pages.Admin
         public Models.Route Route { get; set; }
         [BindProperty]
         public Models.Trip Trip { get; set; }
+        public List<SelectListItem> Routes { get; set; }
+
 
         public CreateModel(BusStationWeb.Data.ApplicationDbContext context)
         {
@@ -21,6 +26,7 @@ namespace BusStationWeb.Pages.Admin
         public IActionResult OnGet(string type)
         {
             TypeModel = type;
+            Routes = _context.Routes.Select(x => new SelectListItem { Text = $"{x.From} - {x.To}", Value = x.RouteId.ToString() }).ToList();
             return Page();
         }
 

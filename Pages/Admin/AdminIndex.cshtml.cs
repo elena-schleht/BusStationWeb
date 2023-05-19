@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusStationWeb.Pages.Admin
 {
+    [Authorize]
     public class AdminIndex : PageModel
     {
         private readonly BusStationWeb.Data.ApplicationDbContext _context;
@@ -22,7 +24,7 @@ namespace BusStationWeb.Pages.Admin
             
             Trips = await _context.Trips.Include(i => i.Route).ToListAsync();
 
-            Tickets = await _context.Tickets.ToListAsync();
+            Tickets = await _context.Tickets.Include(i => i.Trip).Include(j => j.Trip.Route).ToListAsync();
         }
     }
 }
