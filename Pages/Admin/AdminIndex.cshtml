@@ -40,13 +40,13 @@
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.RouteId" asp-route-type="route">Редактировать</a> |
-                    <a asp-page="./Details" asp-route-id="@item.RouteId" asp-route-type="route">Детали</a> |
                     <a asp-page="./Delete" asp-route-id="@item.RouteId" asp-route-type="route">Удалить</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
 <h4 class="text-center">Рейсы</h4>
 
 <p>
@@ -82,7 +82,6 @@
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.TripId" asp-route-type="trip">Редактировать</a> |
-                    <a asp-page="./Details" asp-route-id="@item.TripId" asp-route-type="trip">Детали</a> |
                     <a asp-page="./Delete" asp-route-id="@item.TripId" asp-route-type="trip">Удалить</a>
                 </td>
             </tr>
@@ -90,12 +89,13 @@
     </tbody>
 </table>
 
+<h4 class="text-center">Билеты</h4>
 
-@*<table class="table">
+<table class="table">
     <thead>
         <tr>
             <th>
-                Откуда
+                Дата покупки
             </th>
             <th>
                 Куда
@@ -111,20 +111,18 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.)
+                    @Html.DisplayFor(modelItem => item.PurchaseDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.To)
+                    @Html.DisplayFor(modelItem => item.FIO)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.RouteId">Редактировать</a> |
-                    <a asp-page="./Details" asp-route-id="@item.RouteId">Детали</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.RouteId">Удалить</a>
+                    <a asp-page="./Details" asp-route-id="@item.TicketId">Детали</a>
                 </td>
             </tr>
         }
     </tbody>
-</table>*@
+</table>

@@ -6,30 +6,35 @@
 }
 
 <div>
-    <h4>Route</h4>
+    <h4>Билеты</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Route.From)
+            Дата покупки
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Route.From)
+            @Html.DisplayFor(model => model.Ticket.PurchaseDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Route.To)
+            ФИО
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Route.To)
+            @Html.DisplayFor(model => model.Ticket.FIO)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Route.Price)
+            Цена
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Route.Price)
+            @Html.DisplayFor(model => model.Ticket.Price)
+        </dd>
+        <dt class="col-sm-2">
+            Ваш уникальный номер
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.TicketId)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Route?.RouteId">Редактировать</a> |
     <a asp-page="./AdminIndex">Вернуться</a>
 </div>

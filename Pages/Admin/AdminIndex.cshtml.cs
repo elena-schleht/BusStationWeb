@@ -19,6 +19,7 @@ namespace BusStationWeb.Pages.Admin
         public async Task OnGetAsync()
         {
             Routes = await _context.Routes.ToListAsync();
+            
             Trips = await _context.Trips.Include(i => i.Route).ToListAsync();
 
             Tickets = await _context.Tickets.ToListAsync();
