@@ -1,0 +1,17 @@
+﻿{
+  "name": "Bus Station",
+  "short_name": "Bus Station",
+  "description": "Ticket booking",
+  "icons": [
+    {
+      "src": "/img/icon_bus192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/icon_bus512.png",
+      "sizes": "512x512"
+    }
+  ],
+  "display": "standalone",
+  "start_url": "/"
+}
