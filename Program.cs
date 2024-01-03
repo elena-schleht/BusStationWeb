@@ -1,6 +1,7 @@
 using BusStationWeb.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace BusStationWeb
 {
@@ -8,6 +9,12 @@ namespace BusStationWeb
     {
         public static void Main(string[] args)
         {
+            var culture = new CultureInfo("ru-RU");
+            culture.NumberFormat.CurrencyDecimalSeparator = ".";
+            culture.NumberFormat.NumberDecimalSeparator = ".";
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.

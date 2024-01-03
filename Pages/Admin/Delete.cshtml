@@ -5,45 +5,69 @@
     ViewData["Title"] = "Удалить";
 }
 
-@if ( Model.TypeModel == "route")
+@if (Model.TypeModel == "citie")
 {
-<h3>Вы уверены, что хотите удалить маршрут?</h3>
-<div>
-    <h4>Маршрут</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Откуда
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Route.From)
-        </dd>
-        <dt class="col-sm-2">
-            Куда
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Route.To)
-        </dd>
-        <dt class="col-sm-2">
-            Цена
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Route.Price)
-        </dd>
-    </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="Route.RouteId" />
-            <input type="submit" value="Delete" class="btn btn-danger" asp-route-type="route" /> |
-        <a asp-page="./AdminIndex">Вернуться</a>
-    </form>
-</div>
+    <h4>Вы уверены, что хотите удалить город?</h4>
+    <div>
+        <h3>Город</h3>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Наименовние
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Citie.NameCity)
+            </dd>
+        </dl>
+
+        <form method="post">
+            <input type="hidden" asp-for="Citie.Id" />
+            <input type="submit" value="Delete" class="btn btn-danger" asp-route-id="@Model.Citie.Id" asp-route-type="citie" /> |
+            <a asp-page="./AdminIndex">Вернуться</a>
+        </form>
+    </div>
 }
+
+else if ( Model.TypeModel == "route")
+{
+    <h4>Вы уверены, что хотите удалить маршрут?</h4>
+    <div>
+        <h3>Маршрут</h3>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Откуда
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Route.From.NameCity)
+            </dd>
+            <dt class="col-sm-2">
+                Куда
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Route.To.NameCity)
+            </dd>
+            <dt class="col-sm-2">
+                Цена
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Route.Price)
+            </dd>
+        </dl>
+    
+        <form method="post">
+            <input type="hidden" asp-for="Route.RouteId" />
+            <input type="submit" value="Delete" class="btn btn-danger" asp-route-id="@Model.Route.RouteId" asp-route-type="route" /> |
+            <a asp-page="./AdminIndex">Вернуться</a>
+        </form>
+    </div>
+}
+
 else
 {
-    <h3>Вы уверены, что хотите удалить рейс?</h3>
+    <h4>Вы уверены, что хотите удалить рейс?</h4>
     <div>
-        <h4>Рейс</h4>
+        <h3>Рейс</h3>
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
@@ -53,22 +77,22 @@ else
                 @Html.DisplayFor(model => model.Trip.DepartureDate)
             </dd>
             <dt class="col-sm-2">
-                Пункт отправления -
+                Пункт отправления
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Trip.Route.From)
+                @Html.DisplayFor(model => model.Trip.Route.From.NameCity)
             </dd>
             <dt class="col-sm-2">
                 Пункт назначения
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayNameFor(model => model.Trip.Route.To)
+                @Html.DisplayFor(model => model.Trip.Route.To.NameCity)
             </dd>
             <dt class="col-sm-2">
-                Билеты
+                Куплено билетов
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Trip.Tickets)
+                @Html.DisplayFor(model => model.Trip.Tickets.Count)
             </dd>
             <dt class="col-sm-2">
                 Количество мест
@@ -80,8 +104,15 @@ else
 
         <form method="post">
             <input type="hidden" asp-for="Trip.TripId" />
-            <input type="submit" value="Delete" class="btn btn-danger" asp-route-type="trip" /> |
+
+            <input type="submit" en value="Delete" class="btn btn-danger" disabled="@(Model.Trip.Tickets.Count > 0 ? "disabled" : null)" asp-route-id="@Model.Trip.TripId" asp-route-type="trip" /> |
             <a asp-page="./AdminIndex">Вернуться</a>
+
         </form>
+
+        @if (Model.Trip.Tickets.Count > 0)
+        {
+            <div class="alert alert-danger" role="alert">Нельзя удалить рейс если на него куплены билеты</div>
+        }
     </div>
 }

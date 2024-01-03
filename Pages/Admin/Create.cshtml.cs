@@ -2,23 +2,27 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusStationWeb.Pages.Admin
 {
     [Authorize]
     public class CreateModel : PageModel
     {
-        private readonly BusStationWeb.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
         [BindProperty]
         public string TypeModel { get; set; }
+        [BindProperty]
+        public Models.Citie Citie { get; set; }
         [BindProperty]
         public Models.Route Route { get; set; }
         [BindProperty]
         public Models.Trip Trip { get; set; }
+        public List<SelectListItem> Cities { get; set; }
         public List<SelectListItem> Routes { get; set; }
 
 
-        public CreateModel(BusStationWeb.Data.ApplicationDbContext context)
+        public CreateModel(Data.ApplicationDbContext context)
         {
             _context = context;
         }
@@ -26,7 +30,9 @@ namespace BusStationWeb.Pages.Admin
         public IActionResult OnGet(string type)
         {
             TypeModel = type;
-            Routes = _context.Routes.Select(x => new SelectListItem { Text = $"{x.From} - {x.To}", Value = x.RouteId.ToString() }).ToList();
+            Cities = _context.Cities.Select(c => new SelectListItem { Text = $"{c.NameCity}", Value = c.Id.ToString() }).ToList();
+            Routes = _context.Routes.Include(x => x.From).Include(x => x.To).Select(r => new SelectListItem { Text = $"{r.From.NameCity} - {r.To.NameCity}", Value = r.RouteId.ToString() }).ToList();
+
             return Page();
         }
 
@@ -37,7 +43,11 @@ namespace BusStationWeb.Pages.Admin
                 return Page();
             }
 
-            if (type == "route")
+            if (type == "citie")
+            {
+                _context.Cities.Add(Citie);
+            }
+            else if (type == "route")
             {
                 _context.Routes.Add(Route);
             }

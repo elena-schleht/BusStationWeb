@@ -3,14 +3,14 @@
 
 // registering service worker
 
-if ('serviceWorker' in navigator) {
-    navigator
-    navigator.serviceWorker.register('serviceworker.js').then(function (res) {
-        console.log('Registration Successful');
-    });
-} else {
-    console.log("Service Worker Registration fails")
-}
+//if ('serviceWorker' in navigator) {
+//    navigator
+//    navigator.serviceWorker.register('serviceworker.js').then(function (res) {
+//        console.log('Registration Successful');
+//    });
+//} else {
+//    console.log("Service Worker Registration fails")
+//}
 
 function selectTrip(tripId, from, to) {
     $(".alert").remove();

@@ -13,6 +13,7 @@ namespace BusStationWeb.Pages
         public IndexModel(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
+            //dbContext.Database.EnsureCreated();
 
             Trips = dbContext.Trips.Include(i => i.Route).Where(x => x.DepartureDate > DateTime.Now && x.AvailableSeats > 0).ToList();
         }
@@ -56,7 +57,7 @@ namespace BusStationWeb.Pages
             dbContext.SaveChanges();
 
             IsBooked = true;
-            Info = $"Вы забронировали билет на <strong>{trip.DepartureDate} '{trip.Route.From} -> {trip.Route.To}'</strong>." +
+            Info = $"Вы забронировали билет на <strong>{trip.DepartureDate} '{trip.Route.FromId} -> {trip.Route.ToId}'</strong>." +
                 $"\r\nВаш уникальный номер <strong>{newTicket.Entity.TicketId}</strong> необходимо предъявить на кассе";
 
             return Page();

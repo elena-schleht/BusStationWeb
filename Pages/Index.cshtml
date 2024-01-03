@@ -23,11 +23,11 @@
         {
             <tr>
                 <td>@trip.DepartureDate.ToString("dd.MM.yyyy hh:mm")</td>
-                <td>@trip.Route.From</td>
-                <td>@trip.Route.To</td>
+                <td>@trip.Route.FromId</td>
+                <td>@trip.Route.ToId</td>
                 <td>@trip.Route.Price</td>
                 <td>@trip.AvailableSeats</td>
-                <td><button onclick="selectTrip(@trip.TripId, '@trip.Route.From', '@trip.Route.To')" id="SelectedTrip" class="btn btn-default">Забронировать</button></td>
+                <td><button onclick="selectTrip(@trip.TripId, '@trip.Route.FromId', '@trip.Route.ToId')" id="SelectedTrip" class="btn btn-default">Забронировать</button></td>
             </tr>
         }
     </table>
