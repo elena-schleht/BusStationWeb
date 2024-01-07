@@ -33,4 +33,13 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="BusStationWeb-53bc9b9d-9d6a-45d4-8429-2a2761773502.mdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="BusStationWeb-53bc9b9d-9d6a-45d4-8429-2a2761773502_log.ldf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
