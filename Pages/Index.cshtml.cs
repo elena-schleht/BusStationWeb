@@ -36,8 +36,7 @@ namespace BusStationWeb.Pages
             }
 
             var exist = dbContext.Tickets.FirstOrDefault(x => x.Trip.TripId == trip.TripId
-                && x.Trip.DepartureDate == trip.DepartureDate
-                && x.FIO == fio);
+                && x.Trip.DepartureDate == trip.DepartureDate);
 
             if (exist != null)
             {
@@ -49,8 +48,7 @@ namespace BusStationWeb.Pages
             {
                 TripId = trip.TripId,
                 Price = trip.Route.Price,
-                PurchaseDate = DateTime.Now,
-                FIO = fio
+                PurchaseDate = DateTime.Now
             });
             trip.AvailableSeats -= 1;
 
