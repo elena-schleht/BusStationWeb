@@ -5,15 +5,21 @@
 }
 
 <div id="Contacts" class="text-center wrp pb-3">
-    <h3 class="display-4">Автовокзал г.Тирасполь</h3>
-    <address>
-        г. Тирасполь,
-        ул. Ленина 59
-    </address>
-    <div><a href="tel:+373053394331">+373 (533) 9-43-31</a></div>
-    <div>
-        Режим работы: <br />
-        Ежедневно: 5:00 - 20:00 <br />
-        Выходные и праздничные дни: 5:00 - 21:30
-    </div>
+
+    @foreach (var contact in Model.Contacts)
+    {
+        <h3 class="display-4">Автовокзал @contact.Citie.NameCity</h3>
+        <address>
+            @contact.Address
+        </address>
+        <div><a href="tel:@contact.Phone">@contact.Phone</a></div>
+
+        <p class="display-6">Режим работы</p>
+        <div>
+            @contact.WorkDays
+        </div>
+        <div>
+            @contact.Weekends
+        </div>
+    }
 </div>

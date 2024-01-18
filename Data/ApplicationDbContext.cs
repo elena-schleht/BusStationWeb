@@ -16,6 +16,7 @@ namespace BusStationWeb.Data
         public DbSet<Models.Trip> Trips { get; set; }
         public DbSet<Models.Ticket> Tickets { get; set; }
         public DbSet<Models.Citie> Cities { get; set; }
+        public DbSet<Models.Contact> Contacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
