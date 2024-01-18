@@ -3,6 +3,7 @@ using BusStationWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BusStationWeb.Pages
 {
@@ -13,19 +14,28 @@ namespace BusStationWeb.Pages
         public IndexModel(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-            //dbContext.Database.EnsureCreated();
-
+            //Date = DateTime.Now.Date.ToString("dd.MM.yyyy");
             Routes = dbContext.Routes.Include(r => r.From).Include(r => r.To).ToList();
-            Trips = dbContext.Trips.Include(i => i.Route).Where(x => x.DepartureDate > DateTime.Now && x.AvailableSeats > 0).ToList();
+            Trips = dbContext.Trips.Include(i => i.Route).Where(x => /*x.DepartureDate > DateTime.Now &&*/ x.AvailableSeats > 0).ToList();
         }
 
         public List<Models.Route> Routes { get; set; }
         public List<Trip> Trips { get; set; }
 
+        [BindProperty, DataType(DataType.Date)]
+        public string Date { get; set; }
+
         public bool IsBooked { get; set; }
         public string Info { get; set; }
         public string Error { get; set; }
 
+
+        public async Task<PartialViewResult> OnGetFilterAsync(DateTime filterDate)
+        {
+            Routes = await dbContext.Routes.Include(r => r.From).Include(r => r.To).ToListAsync();
+            Trips = await dbContext.Trips.Include(i => i.Route).Where(x => /*x.DepartureDate > DateTime.Now &&*/ x.DepartureDate.Date == filterDate && x.AvailableSeats > 0).ToListAsync();
+            return Partial("TripsPartial", Trips);
+        }
 
         public IActionResult OnPostTicket(int tripId)
         {

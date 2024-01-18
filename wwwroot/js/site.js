@@ -19,3 +19,16 @@ function selectTrip(tripId, from, to, date) {
     $("#selectedTripId").val(tripId);
     $("#selectedTrip").text(from + ' -> ' + to + ' на ' + date);
 }
+
+function GetData() {
+    var selectedFilter = $("#filterData").val();
+
+    $.ajax({
+        type: "GET",
+        url: "Index?handler=Filter",
+        data: { filterDate: selectedFilter },
+        success: function (data, textStatus, jqXHR) {
+            $('#trips').html(data);
+        }
+    })
+}

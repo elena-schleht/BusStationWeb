@@ -10,27 +10,11 @@
 </div>
 
 <div class="text-center wrp">
-    <table class="table table-striped table-hover">
-        <tr>
-            <th>Дата отправления</th>
-            <th>Откуда</th>
-            <th>Куда</th>
-            <th>Цена</th>
-            <th>Кол-во свободных мест</th>
-            <th></th>
-        </tr>
-        @foreach (var trip in Model.Trips)
-        {
-            <tr>
-                <td>@trip.DepartureDate.ToString("dd.MM.yyyy hh:mm")</td>
-                <td>@trip.Route.From.NameCity</td>
-                <td>@trip.Route.To.NameCity</td>
-                <td>@trip.Route.Price</td>
-                <td>@trip.AvailableSeats</td>
-                <td><button onclick="selectTrip(@trip.TripId, '@trip.Route.From.NameCity', '@trip.Route.To.NameCity', '@trip.DepartureDate.ToString("dd.MM.yyyy hh:mm")')" id="SelectedTrip" class="btn btn-default">Забронировать</button></td>
-            </tr>
-        }
-    </table>
+    <input id="filterData" asp-for="Date" value="@Model.Date" onchange="GetData()" />
+
+    <div id="trips">
+        @await Html.PartialAsync("TripsPartial", Model.Trips)
+    </div>
 
     <div id="idTicket" class="text-center col-md-4 wrp pb-3" style="display: none; margin: 0 34%;">
         <form class="form" method="post">
