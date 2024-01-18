@@ -12,10 +12,10 @@
 //    console.log("Service Worker Registration fails")
 //}
 
-function selectTrip(tripId, from, to) {
+function selectTrip(tripId, from, to, date) {
     $(".alert").remove();
 
     $("#idTicket").css("display", "block");
     $("#selectedTripId").val(tripId);
-    $("#selectedTrip").text(from + ' -> ' + to);
+    $("#selectedTrip").text(from + ' -> ' + to + ' на ' + date);
 }

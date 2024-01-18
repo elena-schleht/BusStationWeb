@@ -15,9 +15,11 @@ namespace BusStationWeb.Pages
             this.dbContext = dbContext;
             //dbContext.Database.EnsureCreated();
 
+            Routes = dbContext.Routes.Include(r => r.From).Include(r => r.To).ToList();
             Trips = dbContext.Trips.Include(i => i.Route).Where(x => x.DepartureDate > DateTime.Now && x.AvailableSeats > 0).ToList();
         }
 
+        public List<Models.Route> Routes { get; set; }
         public List<Trip> Trips { get; set; }
 
         public bool IsBooked { get; set; }
@@ -25,22 +27,13 @@ namespace BusStationWeb.Pages
         public string Error { get; set; }
 
 
-        public IActionResult OnPostTicket(string fio, int tripId)
+        public IActionResult OnPostTicket(int tripId)
         {
             var trip = Trips.Find(x => x.TripId == tripId);
 
             if (trip.AvailableSeats == 0)
             {
                 Error = $"Извините свободных мест на данный рейс уже нет";
-                return Page();
-            }
-
-            var exist = dbContext.Tickets.FirstOrDefault(x => x.Trip.TripId == trip.TripId
-                && x.Trip.DepartureDate == trip.DepartureDate);
-
-            if (exist != null)
-            {
-                Error = $"Вы уже забронировали билет с номером <strong>{exist.TicketId}</strong>";
                 return Page();
             }
 
@@ -55,7 +48,7 @@ namespace BusStationWeb.Pages
             dbContext.SaveChanges();
 
             IsBooked = true;
-            Info = $"Вы забронировали билет на <strong>{trip.DepartureDate} '{trip.Route.FromId} -> {trip.Route.ToId}'</strong>." +
+            Info = $"Вы забронировали билет на <strong>{trip.DepartureDate} '{trip.Route.From.NameCity} -> {trip.Route.To.NameCity}'</strong>." +
                 $"\r\nВаш уникальный номер <strong>{newTicket.Entity.TicketId}</strong> необходимо предъявить на кассе";
 
             return Page();

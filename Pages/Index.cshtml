@@ -23,11 +23,11 @@
         {
             <tr>
                 <td>@trip.DepartureDate.ToString("dd.MM.yyyy hh:mm")</td>
-                <td>@trip.Route.FromId</td>
-                <td>@trip.Route.ToId</td>
+                <td>@trip.Route.From.NameCity</td>
+                <td>@trip.Route.To.NameCity</td>
                 <td>@trip.Route.Price</td>
                 <td>@trip.AvailableSeats</td>
-                <td><button onclick="selectTrip(@trip.TripId, '@trip.Route.FromId', '@trip.Route.ToId')" id="SelectedTrip" class="btn btn-default">Забронировать</button></td>
+                <td><button onclick="selectTrip(@trip.TripId, '@trip.Route.From.NameCity', '@trip.Route.To.NameCity', '@trip.DepartureDate.ToString("dd.MM.yyyy hh:mm")')" id="SelectedTrip" class="btn btn-default">Забронировать</button></td>
             </tr>
         }
     </table>
@@ -41,7 +41,7 @@
             <div class="mb-3">
                 <input id="selectedTripId" hidden name="tripId" />
             </div>
-            <button id="postTicket" asp-page-handler="Ticket" type="submit" asp-for="tripId" class="btn btn-primary">Отправить</button>
+            <button id="postTicket" asp-page-handler="Ticket" type="submit" asp-for="tripId" class="btn btn-primary">Подтвердить</button>
         </form>
     </div>    
 
