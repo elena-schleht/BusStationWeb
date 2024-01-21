@@ -1,0 +1,58 @@
+﻿@page
+@model BusStationWeb.Pages.Admin.Trips.DeleteModel
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h4>Вы уверены, что хотите удалить рейс?</h4>
+<div>
+    <h3>Рейс</h3>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Дата отправления
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Trip.DepartureDate)
+        </dd>
+        <dt class="col-sm-2">
+            Пункт отправления
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Trip.Route.From.NameCity)
+        </dd>
+        <dt class="col-sm-2">
+            Пункт назначения
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Trip.Route.To.NameCity)
+        </dd>
+        <dt class="col-sm-2">
+            Куплено билетов
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Trip.Tickets.Count)
+        </dd>
+        <dt class="col-sm-2">
+            Количество мест
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Trip.AvailableSeats)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Trip.TripId" />
+
+        <input type="submit" en value="Delete" class="btn btn-danger" disabled="@(Model.Trip.Tickets.Count > 0 ? "disabled" : null)" asp-route-id="@Model.Trip.TripId" asp-route-type="trip" /> |
+        <a asp-page="./Index">Вернуться</a>
+
+    </form>
+
+    @if (Model.Trip.Tickets.Count > 0)
+    {
+        <div class="alert alert-danger" role="alert">Нельзя удалить рейс если на него куплены билеты</div>
+    }
+</div>
+

@@ -1,0 +1,63 @@
+﻿@page
+@model Admin.Trips.Index
+
+@{
+    ViewData["Title"] = "Рейсы";
+}
+
+<ul class="nav navbar-light bg-white bg-nav border-bottom box-shadow mb-3 justify-content-center sticky-top">
+    <li class="nav-item">
+        <a class="nav-link" href="vokzals">Вокзалы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="routes">Маршруты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="trips">Рейсы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="tickets">Проданные билеты</a>
+    </li>
+</ul>
+
+
+<h4 class="text-center">Рейсы</h4>
+<p>
+    <a asp-page="Create" asp-route-type="trip">Создать рейс</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Дата отправления
+            </th>
+            <th>
+                Количество мест
+            </th>
+            <th>
+                Маршрут
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Trips)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartureDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailableSeats)
+                </td>
+                <td>
+                    @item.Route.From.NameCity - @item.Route.To.NameCity
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.TripId" asp-route-type="trip">Редактировать</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.TripId" asp-route-type="trip">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

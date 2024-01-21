@@ -1,0 +1,56 @@
+﻿@page
+@model Admin.Vokzals.Index
+
+@{
+    ViewData["Title"] = "Вокзалы";
+}
+
+<ul class="nav navbar-light bg-white bg-nav border-bottom box-shadow mb-3 justify-content-center sticky-top">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="vokzals">Вокзалы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="routes">Маршруты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="trips">Рейсы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="tickets">Проданные билеты</a>
+    </li>
+</ul>
+
+<h4 class="text-center">Вокзалы</h4>
+<p>
+    <a asp-page="Create" asp-route-type="citie">Создать вокзал</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th style="display: none">
+                Идентификатор
+            </th>
+            <th>
+                Наименование
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Cities)
+        {
+            <tr>
+                <td style="display: none">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameCity)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-type="citie">Редактировать</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id" asp-route-type="citie">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

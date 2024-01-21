@@ -1,0 +1,49 @@
+﻿@page
+@model BusStationWeb.Pages.Admin.Routes.EditModel
+
+@{
+    ViewData["Title"] = "Редактировать";
+}
+
+
+@if (Model.TypeModel == "route")
+{
+    <h4>Маршрут</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             <input type="hidden" asp-for="Route.RouteId" />
+                <div class="form-group">
+                    <label class="control-label">Пункт отправления</label>
+                    <select class="form-select" asp-for="Route.FromId" asp-items="@Model.Cities"></select>
+                    <span asp-validation-for="Route.FromId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Пункт назначения</label>
+                    <select class="form-select" asp-for="Route.ToId" asp-items="@Model.Cities"></select>
+                    <span asp-validation-for="Route.ToId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Стоимость</label>
+                    <input asp-for="Route.Price" class="form-control" />
+                    <span asp-validation-for="Route.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" asp-route-type="route" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<div>
+    <a asp-page="./Index">Вернуться</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,61 @@
+﻿@page
+@model Admin.Tickets.Index
+
+@{
+    ViewData["Title"] = "Билеты";
+}
+
+<ul class="nav navbar-light bg-white bg-nav border-bottom box-shadow mb-3 justify-content-center sticky-top">
+    <li class="nav-item">
+        <a class="nav-link" href="vokzals">Вокзалы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="routes">Маршруты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="trips">Рейсы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="tickets">Проданные билеты</a>
+    </li>
+</ul>
+
+
+<h4 class="text-center">Билеты</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Дата продажи
+            </th>
+            <th>
+                Рейс
+            </th>
+            <th>
+                Цена билета
+            </th>
+            <th>
+                Маршрут
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tickets)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @item.Trip.Route.From.NameCity - @item.Trip.Route.To.NameCity
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

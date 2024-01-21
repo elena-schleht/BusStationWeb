@@ -5,156 +5,17 @@
     ViewData["Title"] = "Админка";
 }
 
-<h4 class="text-center">Города</h4>
-<p>
-    <a asp-page="Create" asp-route-type="citie">Создать город</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th style="display: none">
-                Идентификатор
-            </th>
-            <th>
-                Наименование
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Cities)
-        {
-            <tr>
-                <td style="display: none">
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NameCity)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-type="citie">Редактировать</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id" asp-route-type="citie">Удалить</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<h4 class="text-center">Маршруты</h4>
-<p>
-    <a asp-page="Create" asp-route-type="route">Создать маршрут</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Откуда
-            </th>
-            <th>
-                Куда
-            </th>
-            <th>
-                Цена
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Routes)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.From.NameCity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.To.NameCity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.RouteId" asp-route-type="route">Редактировать</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.RouteId" asp-route-type="route">Удалить</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<h4 class="text-center">Рейсы</h4>
-<p>
-    <a asp-page="Create" asp-route-type="trip">Создать рейс</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Дата отправления
-            </th>
-            <th>
-                Количество мест
-            </th>
-            <th>
-                Маршрут
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Trips)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DepartureDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AvailableSeats)
-                </td>
-                <td>
-                    @item.Route.From.NameCity - @item.Route.To.NameCity
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.TripId" asp-route-type="trip">Редактировать</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.TripId" asp-route-type="trip">Удалить</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<h4 class="text-center">Билеты</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Дата покупки
-            </th>
-            <th>
-                Цена
-            </th>
-            <th>
-                Маршрут
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Tickets)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PurchaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @item.Trip.Route.From.NameCity - @item.Trip.Route.To.NameCity
-                </td>
-                <td>
-                    <a asp-page="./Details" asp-route-id="@item.TicketId">Детали</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<ul class="nav navbar-light bg-white bg-nav border-bottom box-shadow mb-3 justify-content-center sticky-top">
+    <li class="nav-item">
+        <a class="nav-link" href="vokzals">Вокзалы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="routes">Маршруты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="trips">Рейсы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="tickets">Проданные билеты</a>
+    </li>
+</ul>
