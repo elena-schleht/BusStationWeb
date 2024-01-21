@@ -14,54 +14,57 @@ namespace BusStationWeb.Pages
         public IndexModel(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-            //Date = DateTime.Now.Date.ToString("dd.MM.yyyy");
-            Routes = dbContext.Routes.Include(r => r.From).Include(r => r.To).ToList();
-            Trips = dbContext.Trips.Include(i => i.Route).Where(x => /*x.DepartureDate > DateTime.Now &&*/ x.AvailableSeats > 0).ToList();
         }
-
-        public List<Models.Route> Routes { get; set; }
-        public List<Trip> Trips { get; set; }
 
         [BindProperty, DataType(DataType.Date)]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }        
 
-        public bool IsBooked { get; set; }
-        public string Info { get; set; }
-        public string Error { get; set; }
-
-
-        public async Task<PartialViewResult> OnGetFilterAsync(DateTime filterDate)
+        public async Task<PartialViewResult> OnGetTripsAsync(DateTime filterDate)
         {
-            Routes = await dbContext.Routes.Include(r => r.From).Include(r => r.To).ToListAsync();
-            Trips = await dbContext.Trips.Include(i => i.Route).Where(x => /*x.DepartureDate > DateTime.Now &&*/ x.DepartureDate.Date == filterDate && x.AvailableSeats > 0).ToListAsync();
-            return Partial("TripsPartial", Trips);
+            var trips = await dbContext.Trips
+                .Include(x => x.Route.From)
+                .Include(x => x.Route.To)
+                .Where(x => /*x.DepartureDate > DateTime.Now &&*/ x.DepartureDate.Date == filterDate && x.AvailableSeats > 0)
+                .ToListAsync();
+            return Partial("TripsPartial", trips);
         }
 
-        public IActionResult OnPostTicket(int tripId)
+        public async Task<PartialViewResult> OnPostBook(int tripId, DateTime filterDate)
         {
-            var trip = Trips.Find(x => x.TripId == tripId);
+            var trip = await dbContext.Trips
+                .Include(x => x.Route.From)
+                .Include(x => x.Route.To)
+                .SingleAsync(x => x.TripId == tripId);
+
+            var alert = new Alert();
 
             if (trip.AvailableSeats == 0)
             {
-                Error = $"Извините свободных мест на данный рейс уже нет";
-                return Page();
+                alert.Error = $"Извините свободных мест на данный рейс уже нет";
+            }
+            else
+            {
+                var newTicket = dbContext.Tickets.Add(new Ticket
+                {
+                    TripId = trip.TripId,
+                    Price = trip.Route.Price,
+                    PurchaseDate = DateTime.Now
+                });
+                trip.AvailableSeats -= 1;
+
+                dbContext.SaveChanges();
+
+                alert.Info = $"Вы забронировали билет на <strong>{trip.DepartureDate} '{trip.Route.From.NameCity} -> {trip.Route.To.NameCity}'</strong>." +
+                    $"\r\nВаш уникальный номер <strong>{newTicket.Entity.TicketId}</strong> необходимо предъявить на кассе";
             }
 
-            var newTicket = dbContext.Tickets.Add(new Ticket
-            {
-                TripId = trip.TripId,
-                Price = trip.Route.Price,
-                PurchaseDate = DateTime.Now
-            });
-            trip.AvailableSeats -= 1;
+            var trips = await dbContext.Trips
+                .Include(x => x.Route.From)
+                .Include(x => x.Route.To)
+                .Where(x => /*x.DepartureDate > DateTime.Now &&*/ x.DepartureDate.Date == filterDate && x.AvailableSeats > 0)
+                .ToListAsync();
 
-            dbContext.SaveChanges();
-
-            IsBooked = true;
-            Info = $"Вы забронировали билет на <strong>{trip.DepartureDate} '{trip.Route.From.NameCity} -> {trip.Route.To.NameCity}'</strong>." +
-                $"\r\nВаш уникальный номер <strong>{newTicket.Entity.TicketId}</strong> необходимо предъявить на кассе";
-
-            return Page();
+            return Partial("AlertPartial", alert);
         }
     }
 }

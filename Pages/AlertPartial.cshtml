@@ -1,0 +1,15 @@
+﻿@using BusStationWeb.Models
+@model Alert
+@if (Model.Info != null)
+{
+    <div class="alert alert-success" role="alert">
+        @Html.Raw(@Model.Info.Replace("\r\n", "<br />"))
+    </div>
+}
+
+@if (Model.Error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @Html.Raw(@Model.Error.Replace("\r\n", "<br />"))
+    </div>
+}

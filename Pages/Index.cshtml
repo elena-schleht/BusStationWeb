@@ -3,43 +3,36 @@
 @{
     ViewData["Title"] = "Автовокзал Тирасполь";
 }
+@Html.AntiForgeryToken()
 
 <div id="Index" class="text-center wrp pb-3">
-    <h1 class="display-4">Автовокзал Тирасполь</h1>
+    <h1 class="display-4">Автовокзал Приднестровья</h1>
     <p>Тут вы можете выбрать интересующий вас маршрут и забронировать билет.</p>
 </div>
 
 <div class="text-center wrp">
-    <input id="filterData" asp-for="Date" value="@Model.Date" onchange="GetData()" />
+    <input class="form-control" id="filterData" type="date" asp-for="Date" data-val="true" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="GetTrips()" />
 
     <div id="trips">
-        @await Html.PartialAsync("TripsPartial", Model.Trips)
+
     </div>
 
-    <div id="idTicket" class="text-center col-md-4 wrp pb-3" style="display: none; margin: 0 34%;">
-        <form class="form" method="post">
-            <div class="mb-3">
-                <span id="selectedTrip"></span>
+    <div class="modal fade show" id="TicketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Бронирование билета</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="selectedTripId" hidden name="tripId" />
+                    <span id="selectedTrip"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button id="sendBook" class="btn btn-primary" type="button" onclick="SendBook()">Подтвердить</button>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <input id="selectedTripId" hidden name="tripId" />
-            </div>
-            <button id="postTicket" asp-page-handler="Ticket" type="submit" asp-for="tripId" class="btn btn-primary">Подтвердить</button>
-        </form>
+        </div>
     </div>    
-
-    @if(Model.IsBooked)
-    {
-        <div class="alert alert-success" role="alert">
-            @Html.Raw(@Model.Info.Replace("\r\n", "<br />"))
-        </div>
-    }
-
-    @if (Model.Error != null)
-    {
-        <div class="alert alert-danger" role="alert">
-            @Html.Raw(@Model.Error.Replace("\r\n", "<br />"))
-        </div>
-    }
 </div>

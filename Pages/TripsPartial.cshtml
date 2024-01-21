@@ -18,7 +18,7 @@
             <td>@trip.Route.To.NameCity</td>
             <td>@trip.Route.Price</td>
             <td>@trip.AvailableSeats</td>
-            <td><button onclick="selectTrip(@trip.TripId, '@trip.Route.From.NameCity', '@trip.Route.To.NameCity', '@trip.DepartureDate.ToString("dd.MM.yyyy hh:mm")')" id="SelectedTrip" class="btn btn-default">Забронировать</button></td>
+            <td><button onclick="selectTrip(@trip.TripId, '@trip.Route.From.NameCity', '@trip.Route.To.NameCity', '@trip.DepartureDate.ToString("dd.MM.yyyy hh:mm")')" id="SelectedTrip" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#TicketModal">Забронировать</button></td>
         </tr>
     }
 </table>
