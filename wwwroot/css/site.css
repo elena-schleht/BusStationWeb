@@ -26,5 +26,5 @@ main {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    height: calc(100vh - 155px);
+    min-height: calc(100vh - 155px);
 }
