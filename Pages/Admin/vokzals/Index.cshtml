@@ -33,18 +33,42 @@
             <th>
                 Наименование
             </th>
+            <th>
+                Адрес
+            </th>
+            <th>
+                Телефон
+            </th>
+            <th>
+                Рабочие дни
+            </th>
+            <th>
+                Выходные дни
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Cities)
+        @foreach (var item in Model.Contacts)
         {
             <tr>
                 <td style="display: none">
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NameCity)
+                    @Html.DisplayFor(modelItem => item.Citie.NameCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkDays)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weekends)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.Id" asp-route-type="citie">Редактировать</a> |

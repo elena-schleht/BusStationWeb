@@ -74,3 +74,11 @@ function AlertShow(message) {
     });
     $("#AlertModal").modal("show");
 }
+
+function ChangeCity(sender) {
+    if ($(sender).val() == '0') {
+        $('input[name="CityName"]').show().focus();
+    } else {
+        $('input[name="CityName"]').hide();
+    }
+}

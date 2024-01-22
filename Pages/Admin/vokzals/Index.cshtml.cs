@@ -14,11 +14,11 @@ namespace BusStationWeb.Pages.Admin.Vokzals
             _context = context;
         }
 
-        public IList<Models.Citie> Cities { get; set; } = default!;
+        public IList<Models.Contact> Contacts { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Cities = await _context.Cities.ToListAsync();
+            Contacts = await _context.Contacts.Include(x => x.Citie).ToListAsync();
         }
     }
 }

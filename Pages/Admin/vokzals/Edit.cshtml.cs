@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusStationWeb.Pages.Admin.Vokzals
@@ -14,11 +15,20 @@ namespace BusStationWeb.Pages.Admin.Vokzals
         public string TypeModel { get; set; }
         
         [BindProperty]
-        public Models.Citie Citie { get; set; }
+        public Models.Contact Contact { get; set; }
+
+        [BindProperty]
+        public string CityName { get; set; }
+
+        [BindProperty]
+        public List<SelectListItem> Cities { get; set; }
 
         public EditModel(Data.ApplicationDbContext context)
         {
             _context = context;
+
+            Cities = _context.Cities.Select(c => new SelectListItem { Text = $"{c.NameCity}", Value = c.Id.ToString() }).ToList();
+            Cities.Add(new SelectListItem { Text = "Новое значение", Value = "0", Selected = false });
         }
 
         public async Task<IActionResult> OnGetAsync(int? id, string type)
@@ -31,13 +41,13 @@ namespace BusStationWeb.Pages.Admin.Vokzals
                 {
                     return NotFound();
                 }
-                var citie = await _context.Cities.FirstOrDefaultAsync(c => c.Id == id);
+                var contact = await _context.Contacts.Include(x => x.Citie).FirstOrDefaultAsync(c => c.Id == id);
 
-                if (citie == null)
+                if (contact == null)
                 {
                     return NotFound();
                 }
-                Citie = citie;
+                Contact = contact;
             }
 
             return Page();
@@ -51,7 +61,12 @@ namespace BusStationWeb.Pages.Admin.Vokzals
             }
             if (type == "citie")
             {
-                _context.Update(Citie);
+                if (!string.IsNullOrEmpty(CityName) && Contact.CitieId == 0)
+                {
+                    Contact.Citie = new Models.Citie { NameCity = CityName };
+                }
+
+                _context.Update(Contact);
             }
 
             try

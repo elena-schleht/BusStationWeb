@@ -2,27 +2,48 @@
 @model BusStationWeb.Pages.Admin.Vokzals.EditModel
 
 @{
-    ViewData["Title"] = "Редактировать";
+    ViewData["Title"] = "Редактирование вокзала";
 }
 
 @if (Model.TypeModel == "citie")
 {
-    <h4>Город</h4>
+  <h4>Вокзал</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group" style="display: none">
-                <input asp-for="Citie.Id" class="form-control" />
-            </div>
-                <div class="form-group">
-                    <label class="control-label">Наименование</label>
-                    <input asp-for="Citie.NameCity" class="form-control" />
-                    <span asp-validation-for="Citie.NameCity" class="text-danger"></span>
+                <div class="form-group" style="display: none">
+                    <input asp-for="Contact.Id" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Ok" class="btn btn-primary" asp-route-type="citie" />
+                    <label class="control-label">Наименование</label>
+                    <div class="mb-3">
+                    <select class="form-select" asp-for="Contact.CitieId" asp-items="@Model.Cities" onchange="ChangeCity(this)"></select>
+                    <input asp-for="CityName" class="form-control" style="display: none;" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Адрес</label>
+                    <input asp-for="Contact.Address" class="form-control" />
+                    <span asp-validation-for="Contact.Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Телефон</label>
+                    <input asp-for="Contact.Phone" class="form-control" />
+                    <span asp-validation-for="Contact.Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Рабочие дни</label>
+                    <input asp-for="Contact.WorkDays" class="form-control" />
+                    <span asp-validation-for="Contact.WorkDays" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Выходные дни</label>
+                    <input asp-for="Contact.Weekends" class="form-control" />
+                    <span asp-validation-for="Contact.Weekends" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" asp-route-type="citie" />
                 </div>
             </form>
         </div>

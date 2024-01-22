@@ -12,7 +12,7 @@ namespace BusStationWeb.Pages.Admin.Vokzals
         [BindProperty]
         public string TypeModel { get; set; }
         [BindProperty]
-        public Models.Citie Citie { get; set; }
+        public Models.Contact Contact { get; set; }
 
         public DeleteModel(Data.ApplicationDbContext context)
         {
@@ -25,17 +25,17 @@ namespace BusStationWeb.Pages.Admin.Vokzals
 
             if (type == "citie")
             {
-                if (id == null || _context.Cities == null)
+                if (id == null || _context.Contacts == null)
                 {
                     return NotFound();
                 }
-                var citie = await _context.Cities.FirstOrDefaultAsync(c => c.Id == id);
+                var contact = await _context.Contacts.Include(x => x.Citie).FirstOrDefaultAsync(c => c.Id == id);
 
-                if (citie == null)
+                if (contact == null)
                 {
                     return NotFound();
                 }
-                Citie = citie;
+                Contact = contact;
             }
             return Page();
         }
@@ -46,16 +46,15 @@ namespace BusStationWeb.Pages.Admin.Vokzals
 
             if (type == "citie")
             {
-                if (id == null || _context.Cities == null)
+                if (id == null || _context.Contacts == null)
                 {
                     return NotFound();
                 }
-                var citie = await _context.Cities.FindAsync(id);
+                var contact = await _context.Contacts.FindAsync(id);
 
-                if (citie != null)
+                if (contact != null)
                 {
-                    Citie = citie;
-                    _context.Cities.Remove(Citie);
+                    _context.Contacts.Remove(contact);
                     await _context.SaveChangesAsync();
                 }
             }
