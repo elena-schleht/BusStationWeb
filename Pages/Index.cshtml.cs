@@ -66,5 +66,30 @@ namespace BusStationWeb.Pages
 
             return Partial("AlertPartial", alert);
         }
+
+        public async Task<PartialViewResult> OnPutRevokeTicket(int idTicket)
+        {
+            var alert = new Alert();
+            var ticket = await dbContext.Tickets.Include(x => x.Trip).SingleOrDefaultAsync(x => x.TicketId == idTicket);
+
+            if (ticket == null)
+            {
+                alert.Error = $"С таким номером билета не существует";
+            }
+            else if (ticket.Trip.DepartureDate < DateTime.Now)
+            {
+                alert.Error = $"Нельзя отменить бронь на билет, рейс которого уже завершён";
+            }
+            else
+            {
+                ticket.Trip.AvailableSeats += 1;
+                dbContext.Tickets.Remove(ticket);
+                dbContext.SaveChanges();
+
+                alert.Info = "Бронь отменена!";
+            }
+
+            return Partial("AlertPartial", alert);
+        }
     }
 }

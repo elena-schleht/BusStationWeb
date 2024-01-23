@@ -82,3 +82,18 @@ function ChangeCity(sender) {
         $('input[name="CityName"]').hide();
     }
 }
+
+function RevokeTicket() {
+    $.ajax({
+        type: "PUT",
+        url: "Index?handler=RevokeTicket",
+        headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+        data: {
+            idTicket: $("#idTicketRevok").val()
+        },
+        success: function (data, textStatus, jqXHR) {
+            AlertShow(data);
+            GetTrips();        
+        }
+    })
+}

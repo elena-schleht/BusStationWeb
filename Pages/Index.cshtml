@@ -11,28 +11,43 @@
 </div>
 
 <div class="text-center wrp">
-    <input class="form-control" id="filterData" type="date" asp-for="Date" data-val="true" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="GetTrips()" />
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="border p-1" style="border-radius:5px">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Номер билета для отмены бронирования</label>
+                        <input id="idTicketRevok" type="number" class="form-control">
+                    </div>
+                    <button type="button" class="btn btn-primary align-content-center" onclick="RevokeTicket()">Отменить</button>
+                </form>
+            </div>
+        </div>
 
-    <div id="trips">
+        <div class="col-sm-10">
+            <input class="form-control" id="filterData" type="date" asp-for="Date" data-val="true" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="GetTrips()" />
 
-    </div>
+            <div id="trips">
+            </div>
 
-    <div class="modal fade show" id="TicketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Бронирование билета</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input id="selectedTripId" hidden name="tripId" />
-                    <span id="selectedTrip"></span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button id="sendBook" class="btn btn-primary" type="button" onclick="SendBook()">Подтвердить</button>
+            <div class="modal fade show" id="TicketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Бронирование билета</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input id="selectedTripId" hidden name="tripId" />
+                            <span id="selectedTrip"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button id="sendBook" class="btn btn-primary" type="button" onclick="SendBook()">Подтвердить</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
