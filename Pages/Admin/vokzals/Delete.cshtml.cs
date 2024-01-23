@@ -14,6 +14,8 @@ namespace BusStationWeb.Pages.Admin.Vokzals
         [BindProperty]
         public Models.Contact Contact { get; set; }
 
+        public string ContactFull => $"{Contact.Citie.NameCity} - {Contact.Address}";
+
         public DeleteModel(Data.ApplicationDbContext context)
         {
             _context = context;

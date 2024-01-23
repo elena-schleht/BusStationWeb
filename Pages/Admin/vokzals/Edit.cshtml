@@ -17,7 +17,7 @@
                     <input asp-for="Contact.Id" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Наименование</label>
+                    <label class="control-label">Населенный пункт</label>
                     <div class="mb-3">
                     <select class="form-select" asp-for="Contact.CitieId" asp-items="@Model.Cities" onchange="ChangeCity(this)"></select>
                     <input asp-for="CityName" class="form-control" style="display: none;" />
