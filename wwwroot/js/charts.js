@@ -36,6 +36,7 @@ $(function () {
 
 function BuildCharts(startDate, endDate) {
     BuildTicketsByMonth(startDate, endDate);
+    BuildSumByMonth(startDate, endDate);
     BuildTicketsByRoute(startDate, endDate);
 }
 
@@ -62,6 +63,34 @@ async function BuildTicketsByMonth(startDate, endDate) {
                 data: data,
                 borderWidth: 1,
                 backgroundColor: color
+            }]
+        }
+    });
+}
+
+async function BuildSumByMonth(startDate, endDate) {
+    SplashScreen("#chartsSumByMonth")
+
+    var response = await ajax_chart('/Admin/AdminIndex?handler=SumByMonth', { dtStart: startDate.format('YYYY-MM-DD'), dtEnd: endDate.format('YYYY-MM-DD') });
+
+    var labels = response.map(function (e) {
+        return e.date;
+    });
+    var data = response.map(function (e) {
+        return e.count;
+    });
+
+    $("#chartsSumByMonth").html('<canvas></canvas>');
+
+    var chart = new Chart($("#chartsSumByMonth").children("canvas"), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Выручка',
+                data: data,
+                borderWidth: 1,
+                backgroundColor: ['#CB4335', '#1F618D', '#F1C40F', '#27AE60', '#884EA0', '#D35400']
             }]
         }
     });

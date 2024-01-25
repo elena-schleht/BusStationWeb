@@ -25,6 +25,16 @@ namespace BusStationWeb.Pages.Admin
             return new JsonResult(result);
         }
 
+        public JsonResult OnGetSumByMonth(DateTime dtStart, DateTime dtEnd)
+        {
+            var result = _context.Tickets
+                .Where(x => x.PurchaseDate >= dtStart && x.PurchaseDate <= dtEnd).OrderBy(x => x.PurchaseDate).ToList()
+                .GroupBy(x => x.PurchaseDate.ToString("MMM yy"))
+                .Select(group => new { Date = group.Key, Count = group.Sum(x=>x.Price) }).ToList();
+
+            return new JsonResult(result);
+        }
+
         public JsonResult OnGetTicketsByRoute(DateTime dtStart, DateTime dtEnd)
         {
             var result = _context.Tickets.Include(x => x.Trip.Route.From).Include(x => x.Trip.Route.To)
