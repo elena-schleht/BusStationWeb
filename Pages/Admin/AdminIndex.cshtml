@@ -7,6 +7,9 @@
 
 <ul class="nav navbar-light bg-white bg-nav border-bottom box-shadow mb-3 justify-content-center sticky-top">
     <li class="nav-item">
+        <a class="nav-link active" href="/Admin/AdminIndex">Аналитика</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="vokzals">Вокзалы</a>
     </li>
     <li class="nav-item">
@@ -19,3 +22,28 @@
         <a class="nav-link" href="tickets">Проданные билеты</a>
     </li>
 </ul>
+
+<h4 class="text-center">Аналитика</h4>
+
+<input class="form-control" style="width:200px" type="text" name="datefilter" value="" />
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <div id="chartsTicketsByMonth"></div>
+        </div>
+        <div class="col">
+            <div id="chartsTicketsByRoute"></div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/lib/moment.min.js"></script>
+    <script src="~/lib/daterangepicker.min.js"></script>
+    <script src="~/lib/chart.js"></script>
+    <script src="~/lib/chartjs-plugin-colorschemes.min.js"></script>
+    <script src="~/js/charts.js"></script>
+}

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,20 +15,24 @@ namespace BusStationWeb.Pages.Admin
             _context = context;
         }
 
-        public IList<Models.Route> Routes { get; set; } = default!;
-        public IList<Models.Trip> Trips { get; set; } = default!;
-        public IList<Models.Ticket> Tickets { get; set; } = default!;
-        public IList<Models.Citie> Cities { get; set; } = default!;
-
-        public async Task OnGetAsync()
+        public JsonResult OnGetTicketsByMonth(DateTime dtStart, DateTime dtEnd)
         {
-            Cities = await _context.Cities.ToListAsync();
+            var result = _context.Tickets
+                .Where(x => x.PurchaseDate >= dtStart && x.PurchaseDate <= dtEnd).OrderBy(x=>x.PurchaseDate).ToList()
+                .GroupBy(x => x.PurchaseDate.ToString("MMM yy"))
+                .Select(group => new { Date = group.Key, Count = group.Count() }).ToList();
 
-            Routes = await _context.Routes.ToListAsync();
-            
-            Trips = await _context.Trips.Include(i => i.Route).ToListAsync();
+            return new JsonResult(result);
+        }
 
-            Tickets = await _context.Tickets.Include(i => i.Trip).Include(j => j.Trip.Route).ToListAsync();           
+        public JsonResult OnGetTicketsByRoute(DateTime dtStart, DateTime dtEnd)
+        {
+            var result = _context.Tickets.Include(x => x.Trip.Route.From).Include(x => x.Trip.Route.To)
+                .Where(x => x.PurchaseDate >= dtStart && x.PurchaseDate <= dtEnd).OrderBy(x => x.PurchaseDate).ToList()
+                .GroupBy(x => $"{x.Trip.Route.From.NameCity} - {x.Trip.Route.To.NameCity}")
+                .Select(group => new { Date = group.Key, Count = group.Count() }).ToList();
+
+            return new JsonResult(result);
         }
     }
 }
