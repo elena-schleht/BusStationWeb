@@ -1,4 +1,13 @@
-﻿$(function () {
+﻿var color = [
+    '#ff6384',
+    '#d62728',
+    '#36a2eb',
+    '#cc65fe',
+    '#ffce56',
+    '#9bd0f5'
+];
+
+$(function () {
     $('input[name="datefilter"]').daterangepicker({
         autoUpdateInput: true,
         startDate: moment().startOf('year'),
@@ -51,13 +60,9 @@ async function BuildTicketsByMonth(startDate, endDate) {
             datasets: [{
                 label: 'Продажи билетов по месецам',
                 data: data,
-                borderWidth: 1
+                borderWidth: 1,
+                backgroundColor: color
             }]
-        },
-        plugins: {
-            colorschemes: {
-                scheme: 'brewer.Paired12'
-            }
         }
     });
 }
@@ -83,7 +88,8 @@ async function BuildTicketsByRoute(startDate, endDate) {
             datasets: [{
                 label: 'Продажи билетов по маршрутам',
                 data: data,
-                borderWidth: 1
+                borderWidth: 1,
+                backgroundColor: color
             }]
         }
     });
